@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Store = mongoose.model('Store');
 
 exports.homePage = (req, res) => {
-  res.render('index');
+  res.render('index', { title: 'Home' });
 };
 
 exports.addStore = (req, res) => {
@@ -11,7 +11,18 @@ exports.addStore = (req, res) => {
 };
 
 exports.createStore = async (req, res) => {
-  const store = new Store(req.body);
-  await store.save();
-  res.redirect('/');
+  const store = await (new Store(req.body)).save();
+  req.flash('success', `Successfully Create ${store.name}. Care to leave a review?`);
+  res.redirect(`/store/${store.slug}`);
+};
+
+exports.getStore = async (req, res) => {
+  req.flash('error', 'Not Implemented');
+  res.redirect('error');
+};
+
+exports.getStores = async (req, res) => {
+  // Get list of all stores
+  const stores = await Store.find();
+  res.render('stores', { title: 'Stores', stores });
 };
