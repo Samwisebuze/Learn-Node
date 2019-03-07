@@ -16,11 +16,18 @@ exports.createStore = async (req, res) => {
   res.redirect(`/store/${store.slug}`);
 };
 
+exports.editStore = async (req, res) => {
+  req.flash('error', 'Not Implemented');
+  res.redirect('error');
+};
+
+// Get
 exports.getStore = async (req, res) => {
   req.flash('error', 'Not Implemented');
   res.redirect('error');
 };
 
+// List
 exports.getStores = async (req, res) => {
   // Get list of all stores
   const stores = await Store.find();
